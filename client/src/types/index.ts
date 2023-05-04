@@ -25,4 +25,5 @@ export type Product = {
   price?: number;
   quantity?: number;
   _id?: string;
+  search?: string;
 };

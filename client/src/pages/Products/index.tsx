@@ -8,11 +8,16 @@ import { useForm, FormProvider } from "react-hook-form";
 import { EditModal } from "./EditModal";
 import { DeleteModal } from "./DeleteModal";
 import { Search } from "../../assets/Search";
+import { Pagination } from "../../components/Pagination";
+import { RowsPagination } from "../../components/RowsPagination";
 
 export const Products = () => {
   const [rowAction, setRowAction] = useState<ProductType>({});
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [rows, setRows] = useState<ProductType[]>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rows, setRows] = useState<ProductType[]>([]);
+  const itemsPerPage = 8;
+  const totalPages = Math.ceil(rows.length / itemsPerPage);
   const methods = useForm();
   const { register, setValue, getValues } = methods;
   const { refetch } = useQuery(READ_ALL_PRODUCTS, {
@@ -27,6 +32,10 @@ export const Products = () => {
         row.name ? row.name.toLowerCase().includes(data.toLowerCase()) : []
       )
     );
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
   };
 
   useEffect(() => {
@@ -48,7 +57,7 @@ export const Products = () => {
       <DeleteModal refetch={refetch} rowAction={rowAction} />
 
       <Header />
-      <div className="flex h-[88vh] flex-col gap-y-4 items-center justify-center">
+      <div className="flex h-[88vh] flex-col mt-2 gap-y-4 items-center">
         <div className="form-control">
           <div className="input-group">
             <button
@@ -81,56 +90,34 @@ export const Products = () => {
             </button>
           </div>
         </div>
-        <div className="overflow-x-auto overflow-y-auto h-5/6 w-5/6 scrollbar">
+        <div className="overflow-x-auto overflow-y-auto h-4/6 w-5/6 scrollbar">
           <table className="table table-compact w-full">
             <thead>
               <tr>
-                <th>Name</th>
-                <th className="text-center">Description</th>
-                <th className="text-center">Price</th>
-                <th className="text-center">Quantity</th>
-                <th></th>
+                <th className="w-1/6">Name</th>
+                <th className="text-center w-2/6">Description</th>
+                <th className="text-center w-1/6">Price</th>
+                <th className="text-center w-1/6">Quantity</th>
+                <th className="w-1/6"></th>
               </tr>
             </thead>
             <tbody>
-              {rows?.map((row: ProductType, index: number) => {
-                return (
-                  <tr key={index}>
-                    <th>{row?.name}</th>
-                    <td className="text-center text-ellipsis">
-                      {row?.description}
-                    </td>
-                    <td className="text-center">{row?.price}</td>
-                    <td className="text-center">{row?.quantity}</td>
-                    <td className="flex justify-center gap-x-4">
-                      <label
-                        htmlFor="modal-edit"
-                        className="btn btn-success btn-outline btn-xs cursor-pointer"
-                        onClick={() => {
-                          setRowAction(row);
-                          setIsEditOpen(true);
-                          setValue("name", row.name);
-                          setValue("description", row.description);
-                          setValue("price", row.price);
-                          setValue("quantity", row.quantity);
-                        }}
-                      >
-                        Edit
-                      </label>
-                      <label
-                        id="label-trigger-delete"
-                        htmlFor="modal-delete"
-                        onClick={() => setRowAction(row)}
-                        className="btn btn-error btn-outline btn-xs cursor-pointer"
-                      >
-                        Delete
-                      </label>
-                    </td>
-                  </tr>
-                );
-              })}
+              <RowsPagination
+                items={rows}
+                setIsEditOpen={setIsEditOpen}
+                setRowAction={setRowAction}
+                currentPage={currentPage}
+                itemsPerPage={itemsPerPage}
+              />
             </tbody>
           </table>
+        </div>
+        <div className="flex w-5/6 justify-end">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </FormProvider>

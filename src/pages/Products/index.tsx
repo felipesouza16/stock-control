@@ -90,7 +90,7 @@ export const Products = () => {
             </button>
           </div>
         </div>
-        <div className="overflow-x-auto overflow-y-auto h-4/6 w-5/6 scrollbar">
+        <div className="overflow-x-auto overflow-y-auto h-4/5 w-5/6 scrollbar">
           <table className="table table-compact w-full">
             <thead>
               <tr>

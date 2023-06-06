@@ -34,6 +34,8 @@ export const EditModal = ({
     const currentData = {
       ...data,
       _id: rowAction._id,
+      quantity: Number(data.quantity),
+      price: Number(data.price),
     };
     await updateProduct({
       variables: {
@@ -42,6 +44,7 @@ export const EditModal = ({
     });
     setIsEditOpen(false);
   };
+
   return (
     <div className="modal">
       <div className="modal-box relative">

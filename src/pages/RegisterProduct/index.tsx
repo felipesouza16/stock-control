@@ -9,7 +9,14 @@ import { CreateProduct } from "../../types";
 
 export const RegisterProduct = () => {
   const methods = useForm();
-  const [createProduct] = useMutation(CREATE_PRODUCT);
+  const [createProduct] = useMutation(CREATE_PRODUCT, {
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onCompleted: () => {
+      navigate("/dashboard");
+    },
+  });
   const { handleSubmit, register } = methods;
   const navigate = useNavigate();
 
@@ -34,20 +41,19 @@ export const RegisterProduct = () => {
         },
       },
     });
-    navigate("/dashboard");
   };
 
   return (
-    <>
+    <div className="flex flex-col">
       <Header />
       <div className="">
         <FormProvider {...methods}>
           <form
-            className="hero lg:min-h-[92vh] bg-transparent"
+            className="hero min-h-screen bg-base-300"
             onSubmit={handleSubmit(onSubmitForm)}
           >
             <div className="hero-content flex-col lg:flex-row">
-              <div className="card w-full max-w-md shadow-2xl border-base-300 border-2 bg-transparent">
+              <div className="card w-full max-w-md shadow-2xl border-base-200 border-2 bg-transparent">
                 <div className="card-body">
                   <div className="flex justify-between items-center gap-x-10">
                     <button
@@ -123,6 +129,6 @@ export const RegisterProduct = () => {
           </form>
         </FormProvider>
       </div>
-    </>
+    </div>
   );
 };

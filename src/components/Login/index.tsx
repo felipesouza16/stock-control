@@ -16,7 +16,11 @@ export const Login = ({ setHomePage }: LoginProps) => {
   const { handleSubmit, register } = methods;
   const navigate = useNavigate();
   const { error: errorMe } = useQuery(GET_ME);
-  const [login, { error }] = useMutation(LOGIN);
+  const [login, { error }] = useMutation(LOGIN, {
+    onCompleted: () => {
+      navigate("/dashboard");
+    },
+  });
 
   const onSubmitLogin = async (data: LoginFields) => {
     await login({
@@ -27,7 +31,6 @@ export const Login = ({ setHomePage }: LoginProps) => {
         },
       },
     });
-    navigate("/dashboard");
   };
 
   if (!errorMe) {

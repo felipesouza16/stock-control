@@ -26,7 +26,7 @@ export const Stats = ({ data }: StatsProps) => {
           </div>
         </div>
         <div className="stat">
-          <div className="stat-title">Menor numero no estoque</div>
+          <div className="stat-title">Lowest number of stock</div>
           <div className="stat-value">{worstProduct?.quantity}</div>
           <div className="stat-desc">↘︎ ({worstProduct?.name})</div>
         </div>

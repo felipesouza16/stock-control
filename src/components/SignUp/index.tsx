@@ -63,15 +63,15 @@ export const SignUp = ({ setHomePage }: SignUpProps) => {
     }
     if (progressPassword <= 33 && watch("password")) {
       setTextProgressPassword("Too weak.");
-      setColorProgress("error");
+      setColorProgress("progress-error");
       return;
     } else if (progressPassword >= 33 && progressPassword < 66) {
       setTextProgressPassword("Can be better.");
-      setColorProgress("warning");
+      setColorProgress("progress-warning");
       return;
     } else if (progressPassword >= 66 && watch("password").length > 0) {
       setTextProgressPassword("Great.");
-      setColorProgress("success");
+      setColorProgress("progress-success");
       return;
     } else if (watch("password").length <= 0) {
       setTextProgressPassword("");
@@ -191,7 +191,7 @@ export const SignUp = ({ setHomePage }: SignUpProps) => {
                   </label>
                 </div>
                 <progress
-                  className={`progress progress-${colorProgress} w-full mt-3`}
+                  className={`progress ${colorProgress} w-full mt-3`}
                   value={progressPassword}
                   max="100"
                 ></progress>

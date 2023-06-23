@@ -36,24 +36,8 @@ export const RowsPagination = ({
 
         return (
           <tr key={index}>
-            <th>
-              <div className="tooltip" data-tip={row.name}>
-                {currentName}
-              </div>
-            </th>
-            <td className="text-center">
-              <div className="dropdown dropdown-hover">
-                <label tabIndex={0}>{currentDescription}</label>
-                <div
-                  tabIndex={0}
-                  className="card compact dropdown-content shadow bg-base-300 h-16 rounded-box w-64"
-                >
-                  <div className="flex break-before-all break-all">
-                    <p className="">{row.description}</p>
-                  </div>
-                </div>
-              </div>
-            </td>
+            <th>{currentName}</th>
+            <td className="text-center">{row.description}</td>
             <td className="text-center">{row?.price}</td>
             <td className="text-center">{row?.quantity}</td>
             <td className="flex justify-center gap-x-4">

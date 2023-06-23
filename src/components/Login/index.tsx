@@ -5,7 +5,7 @@ import { LoginFields } from "../../types";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from "../../lib/mutation";
-import { GET_ME } from "../../lib/query";
+import { useVerifyLogin } from "../../hooks/useVerifyLogin";
 
 interface LoginProps {
   setHomePage: React.Dispatch<React.SetStateAction<HomePage>>;
@@ -13,10 +13,10 @@ interface LoginProps {
 
 export const Login = ({ setHomePage }: LoginProps) => {
   const methods = useForm();
+  const { isLogged } = useVerifyLogin();
   const { handleSubmit, register } = methods;
   const navigate = useNavigate();
-  const { error: errorMe } = useQuery(GET_ME);
-  const [login, { error }] = useMutation(LOGIN, {
+  const [login, { error, loading }] = useMutation(LOGIN, {
     onCompleted: () => {
       navigate("/dashboard");
     },
@@ -33,12 +33,16 @@ export const Login = ({ setHomePage }: LoginProps) => {
     });
   };
 
-  if (!errorMe) {
+  if (isLogged) {
     navigate("/dashboard");
   }
 
   if (error?.message) {
     toast.error(error.message);
+  }
+
+  if (loading) {
+    return <span className="loading loading-dots loading-lg"></span>;
   }
 
   return (

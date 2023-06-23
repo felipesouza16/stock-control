@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Product } from "../../types";
 
 interface StatsProps {
@@ -5,12 +6,19 @@ interface StatsProps {
 }
 
 export const Stats = ({ data }: StatsProps) => {
-  const worstProduct = data?.reduce((prev, obj) => {
-    if (Number(obj.quantity) < Number(prev.quantity)) {
-      return obj;
+  const [worstProduct, setWorstProduct] = useState({} as Product);
+  useEffect(() => {
+    if (data !== undefined && data.length !== 0) {
+      setWorstProduct(
+        data?.reduce((prev, obj) => {
+          if (Number(obj.quantity) < Number(prev.quantity)) {
+            return obj;
+          }
+          return prev;
+        })
+      );
     }
-    return prev;
-  });
+  }, []);
 
   return (
     <div className="flex justify-center items-center h-[88vh]">

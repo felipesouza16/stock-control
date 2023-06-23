@@ -20,7 +20,7 @@ export const SignUp = ({ setHomePage }: SignUpProps) => {
   const [colorProgress, setColorProgress] = useState("");
   const [textProgressPassword, setTextProgressPassword] = useState<string>("");
   const { handleSubmit, register, watch, getValues } = methods;
-  const [createUser, { error }] = useMutation(CREATE_USER);
+  const [createUser, { error, loading }] = useMutation(CREATE_USER);
 
   const onSubmitForm = async (data: SignUpFields) => {
     if (!isSamePassword(getValues) || !verifyFieldsEmpty(data)) {
@@ -52,6 +52,14 @@ export const SignUp = ({ setHomePage }: SignUpProps) => {
 
     setHomePage(HomePage.LOGIN);
   };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
+  }
 
   //check strength password
   useEffect(() => {

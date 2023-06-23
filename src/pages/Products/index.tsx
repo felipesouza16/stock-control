@@ -20,7 +20,7 @@ export const Products = () => {
   const totalPages = Math.ceil(rows.length / itemsPerPage);
   const methods = useForm();
   const { register, setValue, getValues } = methods;
-  const { refetch } = useQuery(READ_ALL_PRODUCTS, {
+  const { refetch, loading } = useQuery(READ_ALL_PRODUCTS, {
     onCompleted: (data) => {
       setRows(data?.readAllProducts);
     },
@@ -41,6 +41,14 @@ export const Products = () => {
   useEffect(() => {
     refetch();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <FormProvider {...methods}>

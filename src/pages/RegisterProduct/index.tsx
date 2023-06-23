@@ -9,7 +9,7 @@ import { CreateProduct } from "../../types";
 
 export const RegisterProduct = () => {
   const methods = useForm();
-  const [createProduct] = useMutation(CREATE_PRODUCT, {
+  const [createProduct, { loading }] = useMutation(CREATE_PRODUCT, {
     onError: (error) => {
       toast.error(error.message);
     },
@@ -42,6 +42,14 @@ export const RegisterProduct = () => {
       },
     });
   };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col">

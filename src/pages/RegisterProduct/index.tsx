@@ -9,16 +9,16 @@ import { CreateProduct } from "../../types";
 
 export const RegisterProduct = () => {
   const methods = useForm();
+  const navigate = useNavigate();
   const [createProduct, { loading }] = useMutation(CREATE_PRODUCT, {
     onError: (error) => {
       toast.error(error.message);
     },
     onCompleted: () => {
-      navigate("/dashboard");
+      navigate("/dashboard", { state: "true" });
     },
   });
   const { handleSubmit, register } = methods;
-  const navigate = useNavigate();
 
   const onSubmitForm = async (data: CreateProduct) => {
     if (
@@ -28,6 +28,13 @@ export const RegisterProduct = () => {
       !data.quantity
     ) {
       toast.error("Fill all the fields.", { duration: 3000 });
+      return;
+    }
+
+    if (data.description.trim().length < 10) {
+      toast.error("Description must be at least 10 characters", {
+        duration: 3000,
+      });
       return;
     }
 
@@ -129,7 +136,9 @@ export const RegisterProduct = () => {
                   </div>
 
                   <div className="form-control mt-6">
-                    <button className="btn btn-primary">Register</button>
+                    <button className="btn btn-primary" type="submit">
+                      Register
+                    </button>
                   </div>
                 </div>
               </div>

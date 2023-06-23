@@ -20,7 +20,11 @@ export const SignUp = ({ setHomePage }: SignUpProps) => {
   const [colorProgress, setColorProgress] = useState("");
   const [textProgressPassword, setTextProgressPassword] = useState<string>("");
   const { handleSubmit, register, watch, getValues } = methods;
-  const [createUser, { error, loading }] = useMutation(CREATE_USER);
+  const [createUser, { error, loading }] = useMutation(CREATE_USER, {
+    onCompleted: () => {
+      setHomePage(HomePage.LOGIN);
+    },
+  });
 
   const onSubmitForm = async (data: SignUpFields) => {
     if (!isSamePassword(getValues) || !verifyFieldsEmpty(data)) {
@@ -49,17 +53,7 @@ export const SignUp = ({ setHomePage }: SignUpProps) => {
         },
       },
     });
-
-    setHomePage(HomePage.LOGIN);
   };
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <span className="loading loading-dots loading-lg"></span>
-      </div>
-    );
-  }
 
   //check strength password
   useEffect(() => {
@@ -92,6 +86,14 @@ export const SignUp = ({ setHomePage }: SignUpProps) => {
     toast.error(error.message);
   }
 
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
+  }
+
   return (
     <FormProvider {...methods}>
       <form
@@ -104,6 +106,7 @@ export const SignUp = ({ setHomePage }: SignUpProps) => {
               <div className="flex justify-between items-center gap-x-[8.62rem] lg:gap-x-[14.057rem]">
                 <button
                   className="btn btn-circle"
+                  type="button"
                   onClick={() => setHomePage(HomePage.LOGIN)}
                 >
                   <ArrowBack />
@@ -219,7 +222,9 @@ export const SignUp = ({ setHomePage }: SignUpProps) => {
               </div>
 
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Register</button>
+                <button className="btn btn-primary" type="submit">
+                  Register
+                </button>
               </div>
             </div>
           </div>

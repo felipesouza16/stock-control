@@ -6,7 +6,7 @@ export const useVerifyLogin = () => {
   const [isLogged, setIsLogged] = useState(false);
   useEffect(() => {
     const hasAccessToken = cookie.get("accessToken");
-    if (hasAccessToken.length > 0) {
+    if (hasAccessToken) {
       setIsLogged(true);
       return;
     }

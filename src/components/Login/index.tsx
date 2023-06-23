@@ -42,7 +42,11 @@ export const Login = ({ setHomePage }: LoginProps) => {
   }
 
   if (loading) {
-    return <span className="loading loading-dots loading-lg"></span>;
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
   }
 
   return (

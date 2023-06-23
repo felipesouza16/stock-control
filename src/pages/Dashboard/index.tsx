@@ -4,8 +4,9 @@ import { Stats } from "../../components/Stats";
 import { RadialChart } from "react-vis";
 import { READ_ALL_PRODUCTS } from "../../lib/query";
 import { Product } from "../../types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getColorByName } from "../../utils/javascript";
+import { useLocation } from "react-router-dom";
 
 interface ChartType {
   angle: number;
@@ -20,10 +21,11 @@ interface ChartType {
 
 export const Dashboard = () => {
   const [dataChart, setDataChart] = useState<ChartType[]>([]);
+  const location = useLocation();
 
-  const { data: productData } = useQuery(READ_ALL_PRODUCTS, {
+  const { data: productData, refetch } = useQuery(READ_ALL_PRODUCTS, {
     onCompleted: (data) => {
-      data.readAllProducts.forEach((prod: Product, _: number) => {
+      data.readAllProducts?.forEach((prod: Product, _: number) => {
         setDataChart((previous) => [
           ...previous,
           {
@@ -38,6 +40,14 @@ export const Dashboard = () => {
       });
     },
   });
+
+  useEffect(() => {
+    if (location.state === "true") {
+      setDataChart([]);
+      refetch();
+      return;
+    }
+  }, []);
 
   const totalPrice = productData?.readAllProducts.reduce(
     (prev: number, obj: Product) => prev + Number(obj?.price),
@@ -81,7 +91,8 @@ export const Dashboard = () => {
               colorType="literal"
               labelsStyle={{
                 fontSize: "12px",
-                fill: "#000000",
+                fill: "hsl(var(--bc) / 0.6)",
+                fontWeight: "bold",
               }}
             />
           </div>

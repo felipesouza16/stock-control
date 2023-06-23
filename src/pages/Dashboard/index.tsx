@@ -91,7 +91,6 @@ export const Dashboard = () => {
             <div className="stat">
               <div className="stat-title">Total stock price</div>
               <div className="stat-value">${totalPrice}</div>
-              <div className="stat-desc">21% more than last month</div>
             </div>
           </div>
         </div>

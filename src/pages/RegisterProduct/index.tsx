@@ -49,7 +49,7 @@ export const RegisterProduct = () => {
       <div className="">
         <FormProvider {...methods}>
           <form
-            className="hero min-h-screen bg-base-300"
+            className="hero min-h-screen bg-transparent"
             onSubmit={handleSubmit(onSubmitForm)}
           >
             <div className="hero-content flex-col lg:flex-row">

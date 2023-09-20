@@ -1,4 +1,3 @@
-import { gql } from "@apollo/client/core";
 import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes";
 import { Toaster } from "react-hot-toast";

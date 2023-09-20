@@ -9,8 +9,8 @@ export const Header = () => {
   const navigate = useNavigate();
   const { data } = useQuery(GET_ME);
   return (
-    <div className="navbar bg-base-200">
-      <div className="navbar-start">
+    <div className="navbar bg-base-200 justify-between w-full">
+      <div className="navbar-start w-auto">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <svg
@@ -30,7 +30,7 @@ export const Header = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-200 rounded-box w-52"
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-200 rounded-box w-52 z-50"
           >
             <li onClick={() => navigate("/dashboard")}>
               <a>Dashboard</a>
@@ -47,14 +47,14 @@ export const Header = () => {
       <div className="navbar-center">
         <a className="btn btn-ghost normal-case text-xl">Stock Control</a>
       </div>
-      <div className="navbar-end text-end lg:gap-x-8">
+      <div className="navbar-end text-end lg:gap-x-8 w-auto space-x-2">
         <div className="dropdown dropdown-hover dropdown-bottom dropdown-end justify-end">
           <label tabIndex={0} className="normal-case text-base">
             <Themes />
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-50"
           >
             <li
               onClick={() => {
@@ -95,8 +95,9 @@ export const Header = () => {
           </ul>
         </div>
         <div className="dropdown dropdown-hover dropdown-bottom dropdown-end justify-end">
-          <label tabIndex={0} className="normal-case text-base">
-            Welcome, {data?.me?.first_name}
+          <label tabIndex={0} className="normal-case text-base ">
+            Welcome, <br />
+            {data?.me?.first_name}
           </label>
           <ul
             tabIndex={0}

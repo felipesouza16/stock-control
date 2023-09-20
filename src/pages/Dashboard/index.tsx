@@ -19,6 +19,8 @@ interface ChartType {
   padAngle?: number | VoidFunction;
 }
 
+const MIN_WIDTH = 500;
+
 export const Dashboard = () => {
   const [dataChart, setDataChart] = useState<ChartType[]>([]);
   const location = useLocation();
@@ -54,17 +56,19 @@ export const Dashboard = () => {
     0
   );
 
+  console.log(window.innerWidth);
+
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center">
       <Header />
-      <div className="flex w-[90%] justify-center gap-x-8">
-        <div className="w-1/5">
+      <div className="flex w-[90%] lg:flex-row flex-col justify-center gap-x-8">
+        <div className="lg:w-1/5">
           <Stats data={productData?.readAllProducts} />
         </div>
-        <div className="flex flex-col justify-center w-3/5">
+        <div className="flex flex-col justify-center lg:w-3/5">
           <div className="flex justify-end">
             <div
-              className="tooltip tooltip-bottom"
+              className="tooltip tooltip-left"
               data-tip="Representation of the quantity of each respective product."
             >
               <svg
@@ -85,7 +89,7 @@ export const Dashboard = () => {
           <div className="flex justify-center">
             <RadialChart
               data={dataChart}
-              width={400}
+              width={window.innerWidth >= MIN_WIDTH ? 400 : 300}
               height={500}
               showLabels
               colorType="literal"
@@ -97,7 +101,7 @@ export const Dashboard = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center rounded-lg w-1/5">
+        <div className="flex flex-col items-center justify-center rounded-lg lg:w-1/5">
           <div className="stats bg-base-300 shadow">
             <div className="stat">
               <div className="stat-title">Total stock price</div>
